@@ -46,7 +46,7 @@ class UserServiceTest {
         List<AppUser> listReturned = userService.findAllUsers();
 
         Assertions.assertNotNull(listReturned);
-        Assertions.assertNotEquals(listReturned, false);
+        Assertions.assertTrue(listReturned.isEmpty());
 
     }
 
