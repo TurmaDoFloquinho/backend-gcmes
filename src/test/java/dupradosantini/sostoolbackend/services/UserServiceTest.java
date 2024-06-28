@@ -3,6 +3,7 @@ package dupradosantini.sostoolbackend.services;
 import dupradosantini.sostoolbackend.domain.AppUser;
 import dupradosantini.sostoolbackend.repositories.UserRepository;
 import dupradosantini.sostoolbackend.repositories.WorkspaceMemberRepository;
+import dupradosantini.sostoolbackend.services.exceptions.ObjectNotFoundException;
 import dupradosantini.sostoolbackend.services.interfaces.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -37,7 +39,7 @@ class UserServiceTest {
     }
 
     @Test
-    void userFindAllTest() {
+    void userFindAllWhenNotFoundAnyRegister() {
 
         List<AppUser> workspaceList = new ArrayList<>();
 
@@ -48,6 +50,22 @@ class UserServiceTest {
         Assertions.assertNotNull(listReturned);
         Assertions.assertTrue(listReturned.isEmpty());
 
+    }
+
+
+    @Test
+    void userFindByIdWhenNotFoundOnRepository() {
+
+        AppUser user = new AppUser(1, "Rogerio Santos", "rogerio@gmail.com", "senha1234", null);
+        int id = 2;
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        ObjectNotFoundException exception = Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+            userService.findById(id);
+        });
+
+        Assertions.assertEquals("User not found", exception.getMessage());
     }
 
 }
