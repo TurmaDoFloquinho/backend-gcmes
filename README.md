@@ -49,7 +49,7 @@ No projeto foi criada uma pipeline para rodar no workflow do github actions uma 
 
 ***
 ## Colaboradores (Grupo 05)
-* Angela Patrícia Mestas Muñante
+* Angela Patrícia Mestas Muñanteee
 * Bruna Pereira Serrano da Mata
 * Italo de Matos Saldanha
 * Lucas Pereira Franco de Almeida
