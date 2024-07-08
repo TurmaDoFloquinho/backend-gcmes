@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "https://sitesegurodofloquinho.com")
 @Controller
 @RequestMapping("/filters")
 public class FilterController {
