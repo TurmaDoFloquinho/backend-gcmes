@@ -1,19 +1,15 @@
 package dupradosantini.sostoolbackend.controllers;
 
-import dupradosantini.sostoolbackend.domain.AppUser;
 import dupradosantini.sostoolbackend.domain.Filter;
-import dupradosantini.sostoolbackend.domain.dtos.RoleHistoryDto;
+import dupradosantini.sostoolbackend.domain.dtos.FilterDto;
 import dupradosantini.sostoolbackend.services.interfaces.FilterService;
-import dupradosantini.sostoolbackend.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @CrossOrigin("*")
 @Controller
@@ -27,15 +23,36 @@ public class FilterController {
     }
 
     @PostMapping
-    public ResponseEntity<Filter> createFilter(@RequestBody Filter filter) {
+    public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto filterDto) {
+        Filter filter = new Filter();
+        filter.setName(filterDto.getName());
+        filter.setActive(filterDto.isActive());
+        filter.setType(filterDto.getType());
+
         Filter createdFilter = filterService.createFilter(filter);
-        return new ResponseEntity<>(createdFilter, HttpStatus.CREATED);
+
+        FilterDto createdFilterDto = new FilterDto();
+        createdFilterDto.setId(createdFilter.getId());
+        createdFilterDto.setName(createdFilter.getName());
+        createdFilterDto.setActive(createdFilter.isActive());
+        createdFilterDto.setType(createdFilter.getType());
+
+        return new ResponseEntity<>(createdFilterDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Filter> findFilterById(@PathVariable Long id) {
+    public ResponseEntity<FilterDto> findFilterById(@PathVariable Long id) {
         Optional<Filter> filter = filterService.findFilterById(id);
-        return filter.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+        if (filter.isPresent()) {
+            FilterDto filterDto = new FilterDto();
+            filterDto.setId(filter.get().getId());
+            filterDto.setName(filter.get().getName());
+            filterDto.setActive(filter.get().isActive());
+            filterDto.setType(filter.get().getType());
+            return new ResponseEntity<>(filterDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
