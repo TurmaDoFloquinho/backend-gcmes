@@ -100,4 +100,5 @@ public class UserServiceImpl implements UserService{
     public AppUser updateUser(AppUser appUserObj){
         return this.userRepository.save(appUserObj);
     }
+
 }
