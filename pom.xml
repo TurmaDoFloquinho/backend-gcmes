@@ -17,6 +17,7 @@
         <java.version>11</java.version>
         <sonar.organization>turmadofloquinho</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.exclusions>src/test/**,src/main/java/dupradosantini/sostoolbackend/domain/**,src/main/java/dupradosantini/sostoolbackend/repositories/**</sonar.coverage.exclusions>
         <sonar.token>${env.SONAR_TOKEN}</sonar.token>  <!--Token de autenticação do SonarCloud -->
         <sonar.projectKey>TurmaDoFloquinho_backend-gcmes</sonar.projectKey>
         <sonar.sources>src/main/java</sonar.sources>
