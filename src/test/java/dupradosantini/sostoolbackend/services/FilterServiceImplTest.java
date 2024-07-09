@@ -1,4 +1,4 @@
-package dupradosantini.sostoolbackend;
+package dupradosantini.sostoolbackend.services;
 
 import dupradosantini.sostoolbackend.domain.Filter;
 import dupradosantini.sostoolbackend.domain.dtos.FilterDto;
