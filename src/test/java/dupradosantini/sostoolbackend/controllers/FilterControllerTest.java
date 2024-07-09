@@ -43,4 +43,29 @@ public class FilterControllerTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("Test Filter", response.getBody().getName());
     }
+
+    @Test
+    public void testFindFilterById_Found() {
+        FilterDto filterDto = new FilterDto();
+        filterDto.setId(1);
+        filterDto.setName("Test Filter");
+        filterDto.setActive(true);
+        filterDto.setType("Type1");
+
+        when(filterService.findFilterById(1L)).thenReturn(Optional.of(filterDto));
+
+        ResponseEntity<FilterDto> response = filterController.findFilterById(1L);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Test Filter", response.getBody().getName());
+    }
+
+    @Test
+    public void testFindFilterById_NotFound() {
+        when(filterService.findFilterById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<FilterDto> response = filterController.findFilterById(1L);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }
