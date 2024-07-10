@@ -39,4 +39,10 @@ public class ActivityController {
         Set<AppUser> users = this.workspaceService.getUsersInActivity(activityId);
         return ResponseEntity.ok().body(users);
     }
+
+    @DeleteMapping("/{activityId}")
+    public ResponseEntity<Void> deleteActivity(@PathVariable Integer activityId) {
+        workspaceService.deleteActivity(activityId);
+        return ResponseEntity.noContent().build();
+    }
 }

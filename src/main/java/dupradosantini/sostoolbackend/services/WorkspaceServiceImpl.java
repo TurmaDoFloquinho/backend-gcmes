@@ -393,4 +393,19 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         }
         return users;
     }
+
+    @Override
+    public void deleteActivity(Integer activityId) {
+        var activity = findActivityById(activityId);
+        var workspace = activity.getWorkspace();
+        var activities = workspace.getActivities();
+        
+        if (activities != null) {
+            activities.remove(activity);
+            workspace.setActivities(activities);
+            this.workspaceRepository.save(workspace);
+        }
+
+        this.activityRepository.delete(activity);
+    }
 }
