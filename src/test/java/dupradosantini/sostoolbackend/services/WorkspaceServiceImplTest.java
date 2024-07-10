@@ -1,5 +1,6 @@
 package dupradosantini.sostoolbackend.services;
 
+import dupradosantini.sostoolbackend.domain.Activity;
 import dupradosantini.sostoolbackend.domain.Team;
 import dupradosantini.sostoolbackend.domain.Workspace;
 import dupradosantini.sostoolbackend.repositories.*;
@@ -106,5 +107,30 @@ class WorkspaceServiceImplTest {
 
         assertEquals(teamSet,returnedTeam,"Sets should be equal");
 
+    }
+
+    @Test
+    void deleteActivity_Success() {
+        Integer activityId = 1;
+
+        Workspace workspace = new Workspace();
+        workspace.setId(WORKSPACE_ID);
+
+        Activity activity = new Activity();
+        activity.setId(activityId);
+        activity.setWorkspace(workspace);
+
+        List<Activity> activities = new ArrayList<Activity>();
+        activities.add(activity);
+
+        workspace.setActivities(activities);
+
+        when(activityRepository.findById(activityId)).thenReturn(Optional.of(activity));
+        when(workspaceRepository.save(workspace)).thenReturn(workspace);
+
+        workspaceService.deleteActivity(activityId);
+
+        verify(activityRepository, times(1)).delete(activity);
+        verify(workspaceRepository, times(1)).save(workspace);
     }
 }
