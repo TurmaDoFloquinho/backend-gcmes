@@ -34,4 +34,11 @@ public class FilterController {
         return filterDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping("/ativar-desativar-filtro/{id}")
+    public ResponseEntity<FilterDto> ativarDesativarFiltro(@PathVariable Long id) {
+        boolean success = filterService.ativarDesativarFiltro(id);
+
+        return success ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

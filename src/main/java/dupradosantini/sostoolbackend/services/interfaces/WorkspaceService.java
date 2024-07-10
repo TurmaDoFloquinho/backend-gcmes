@@ -65,4 +65,6 @@ public interface WorkspaceService {
     Set<AppUser> getUsersInActivity(Integer activityId);
 
     Set<AppUser> removeUserFromRole(Integer workspaceId, Integer roleId, AppUser userObj);
+
+    void deleteActivity(Integer activityId);
 }
