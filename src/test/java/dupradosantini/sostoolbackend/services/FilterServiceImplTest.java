@@ -85,4 +85,29 @@ public class FilterServiceImplTest {
         assertEquals(false, success);
     }
 
+    @Test
+    public void testFindFilterById_Found() {
+        Filter filter = new Filter();
+        filter.setId(1);
+        filter.setName("Test Filter");
+        filter.setActive(true);
+        filter.setType("Type1");
+
+        when(filterRepository.findById(1L)).thenReturn(Optional.of(filter));
+
+        Optional<FilterDto> foundFilterDto = filterService.findFilterById(1L);
+
+        assertEquals(true, foundFilterDto.isPresent());
+        assertEquals("Test Filter", foundFilterDto.get().getName());
+    }
+
+    @Test
+    public void testFindFilterById_NotFound() {
+        when(filterRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<FilterDto> foundFilterDto = filterService.findFilterById(1L);
+
+        assertEquals(false, foundFilterDto.isPresent());
+    }
+  
 }
