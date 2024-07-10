@@ -4,6 +4,8 @@ import dupradosantini.sostoolbackend.domain.Activity;
 import dupradosantini.sostoolbackend.domain.Team;
 import dupradosantini.sostoolbackend.domain.Workspace;
 import dupradosantini.sostoolbackend.repositories.*;
+import dupradosantini.sostoolbackend.services.exceptions.ObjectNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -132,5 +134,14 @@ class WorkspaceServiceImplTest {
 
         verify(activityRepository, times(1)).delete(activity);
         verify(workspaceRepository, times(1)).save(workspace);
+    }
+
+    @Test
+    void deleteActivity_NotFound() {
+        Integer activityId = 1;
+
+        when(activityRepository.findById(activityId)).thenReturn(Optional.empty());
+
+        assertThrows(ObjectNotFoundException.class, () -> workspaceService.deleteActivity(activityId));
     }
 }
