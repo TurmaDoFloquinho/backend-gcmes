@@ -68,4 +68,23 @@ public class FilterControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+  
+    public void testAtivarFiltroSucesso() {
+
+        when(filterService.ativarDesativarFiltro(1l)).thenReturn(true);
+
+        ResponseEntity response = filterController.ativarDesativarFiltro(1l);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testAtivarFiltroFalha() {
+
+        when(filterService.ativarDesativarFiltro(1l)).thenReturn(false);
+
+        ResponseEntity response = filterController.ativarDesativarFiltro(1l);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }

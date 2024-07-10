@@ -48,4 +48,21 @@ public class FilterServiceImpl {
             return Optional.empty();
         }
     }
+    public boolean ativarDesativarFiltro (Long id){
+        Optional<Filter> filter = filterRepository.findById(id);
+
+        if (filter.isPresent()) {
+            Filter filterOriginal = new Filter(
+                    filter.get().getId(),
+                    filter.get().getName(),
+                    !filter.get().isActive(),
+                    filter.get().getType()
+            );
+
+            filterRepository.save(filterOriginal);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
